@@ -1,0 +1,609 @@
+[
+    {
+        "type": "constructor",
+        "stateMutability": "nonpayable",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_erc20TransferHelper",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_erc721TransferHelper",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_royaltyEngine",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_protocolFeeSettings",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_wethAddress",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "name": "AskCanceled",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenContract",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "tokenId",
+                "internalType": "uint256",
+                "indexed": true
+            },
+            {
+                "type": "tuple",
+                "name": "ask",
+                "internalType": "struct AsksV1_1.Ask",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "seller",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "sellerFundsRecipient",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "askCurrency",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint16",
+                        "name": "findersFeeBps",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "askPrice",
+                        "internalType": "uint256"
+                    }
+                ]
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "AskCreated",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenContract",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "tokenId",
+                "internalType": "uint256",
+                "indexed": true
+            },
+            {
+                "type": "tuple",
+                "name": "ask",
+                "internalType": "struct AsksV1_1.Ask",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "seller",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "sellerFundsRecipient",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "askCurrency",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint16",
+                        "name": "findersFeeBps",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "askPrice",
+                        "internalType": "uint256"
+                    }
+                ]
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "AskFilled",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenContract",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "tokenId",
+                "internalType": "uint256",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "buyer",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "finder",
+                "internalType": "address",
+                "indexed": false
+            },
+            {
+                "type": "tuple",
+                "name": "ask",
+                "internalType": "struct AsksV1_1.Ask",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "seller",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "sellerFundsRecipient",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "askCurrency",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint16",
+                        "name": "findersFeeBps",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "askPrice",
+                        "internalType": "uint256"
+                    }
+                ]
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "AskPriceUpdated",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenContract",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "tokenId",
+                "internalType": "uint256",
+                "indexed": true
+            },
+            {
+                "type": "tuple",
+                "name": "ask",
+                "internalType": "struct AsksV1_1.Ask",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "seller",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "sellerFundsRecipient",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "askCurrency",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint16",
+                        "name": "findersFeeBps",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "askPrice",
+                        "internalType": "uint256"
+                    }
+                ]
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "ExchangeExecuted",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "userA",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "userB",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "tuple",
+                "name": "a",
+                "internalType": "struct UniversalExchangeEventV1.ExchangeDetails",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "tokenContract",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "tokenId",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "amount",
+                        "internalType": "uint256"
+                    }
+                ]
+            },
+            {
+                "type": "tuple",
+                "name": "b",
+                "internalType": "struct UniversalExchangeEventV1.ExchangeDetails",
+                "indexed": false,
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "tokenContract",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "tokenId",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "amount",
+                        "internalType": "uint256"
+                    }
+                ]
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "RoyaltyPayout",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenContract",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "tokenId",
+                "internalType": "uint256",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "recipient",
+                "internalType": "address",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "amount",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "function",
+        "stateMutability": "payable",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "_handleRoyaltyEnginePayout",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_tokenContract",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_tokenId",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_amount",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address",
+                "name": "_payoutCurrency",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "seller",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "sellerFundsRecipient",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "askCurrency",
+                "internalType": "address"
+            },
+            {
+                "type": "uint16",
+                "name": "findersFeeBps",
+                "internalType": "uint16"
+            },
+            {
+                "type": "uint256",
+                "name": "askPrice",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "askForNFT",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "cancelAsk",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_tokenContract",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_tokenId",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "createAsk",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_tokenContract",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_tokenId",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_askPrice",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address",
+                "name": "_askCurrency",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_sellerFundsRecipient",
+                "internalType": "address"
+            },
+            {
+                "type": "uint16",
+                "name": "_findersFeeBps",
+                "internalType": "uint16"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "contract ERC20TransferHelper"
+            }
+        ],
+        "name": "erc20TransferHelper",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "contract ERC721TransferHelper"
+            }
+        ],
+        "name": "erc721TransferHelper",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "payable",
+        "outputs": [],
+        "name": "fillAsk",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_tokenContract",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_tokenId",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address",
+                "name": "_fillCurrency",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_fillAmount",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address",
+                "name": "_finder",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "string",
+                "name": "",
+                "internalType": "string"
+            }
+        ],
+        "name": "name",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "registrar",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "setAskPrice",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_tokenContract",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_tokenId",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_askPrice",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address",
+                "name": "_askCurrency",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "setRoyaltyEngineAddress",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_royaltyEngine",
+                "internalType": "address"
+            }
+        ]
+    }
+]
